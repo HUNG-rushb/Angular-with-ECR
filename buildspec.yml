@@ -3,7 +3,7 @@ phases:
   pre_build:
     commands:
       # - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
-      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/c9j0w4q5
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/${ECR_ID}
   build:
     commands:
       # - docker build -t my-angular-app:latest .
@@ -12,5 +12,5 @@ phases:
     commands:
       # - docker tag my-angular-app:latest ${DOCKERHUB_USER}/my-angular-app:latest
       # - docker push ${DOCKERHUB_USER}/my-angular-app:latest
-      - docker tag hung_angular_docker:latest public.ecr.aws/c9j0w4q5/hung_angular_docker:latest
-      - docker push public.ecr.aws/c9j0w4q5/hung_angular_docker:latest
+      - docker tag hung_angular_docker:latest public.ecr.aws/${ECR_ID}/hung_angular_docker:latest
+      - docker push public.ecr.aws/${ECR_ID}/hung_angular_docker:latest
