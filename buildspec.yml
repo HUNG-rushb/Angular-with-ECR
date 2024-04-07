@@ -1,0 +1,16 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      # - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/c9j0w4q5
+  build:
+    commands:
+      # - docker build -t my-angular-app:latest .
+      - docker build -t hung_angular_docker .
+  post_build:
+    commands:
+      # - docker tag my-angular-app:latest ${DOCKERHUB_USER}/my-angular-app:latest
+      # - docker push ${DOCKERHUB_USER}/my-angular-app:latest
+      - docker tag hung_angular_docker:latest public.ecr.aws/c9j0w4q5/hung_angular_docker:latest
+      - docker push public.ecr.aws/c9j0w4q5/hung_angular_docker:latest
